@@ -3,4 +3,7 @@
 .env.*
 
 # node_modules
-node_modules
+/node_modules
+
+# request images (privacy)
+/assets
