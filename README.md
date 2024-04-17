@@ -1,1 +1,1 @@
-# Test
+# auto-sample-vr-resource-generator

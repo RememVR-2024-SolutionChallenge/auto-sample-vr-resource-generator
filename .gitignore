@@ -7,3 +7,6 @@
 
 # request images (privacy)
 /assets
+
+# deprecated feature
+/deprecated

@@ -1,19 +1,13 @@
 {
-  "name": "rememvr-test",
-  "version": "1.0.0",
-  "description": "integrated tests, daily tests for validating the service quality.",
+  "author": "woog2roid (Guijung Woo)",
   "scripts": {
-    "test": "npx jest"
+    "test:avatar": "ts-node ./src/index.ts --testAvatar",
+    "test:scene": "ts-node ./src/index.ts --testScene"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RememVR-2024-SolutionChallenge/test.git"
   },
-  "author": "woog2roid (Guijung Woo)",
-  "bugs": {
-    "url": "https://github.com/RememVR-2024-SolutionChallenge/test/issues"
-  },
-  "homepage": "https://github.com/RememVR-2024-SolutionChallenge/test#readme",
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "axios": "^1.6.8",
