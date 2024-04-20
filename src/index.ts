@@ -2,9 +2,9 @@
 // ! NOTE: manually add the assets for the test.
 
 import axios from 'axios';
-import { GATEWAY_SERVER_URL, SCENE, AVATAR } from './lib/consts';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { GATEWAY_SERVER_URL, ADMIN_KEY, SCENE, AVATAR } from './lib/consts';
+import fs from 'fs';
+import FormData from 'form-data';
 
 /**
  * @description send generating avatar requests to gateway server,
@@ -12,18 +12,32 @@ import path from 'path';
  */
 async function generateAvatar() {
   console.log('generate avatars.');
-  AVATAR.forEach(async ({ title, gender, fileDirectory }) => {
-    const bodyData = await loadFile(fileDirectory, 'body.jpg');
-    const faceData = await loadFile(fileDirectory, 'face.jpg');
+  for (const { title, gender, fileDirectory } of AVATAR) {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('gender', gender);
+    formData.append(
+      'body',
+      fs.createReadStream(`${__dirname}/${fileDirectory}/body.jpg`),
+    );
+    formData.append(
+      'face',
+      fs.createReadStream(`${__dirname}/${fileDirectory}/face.jpg`),
+    );
+    formData.append('key', ADMIN_KEY);
 
-    // FIXME: check API endpoint.
-    await axios.post(`${GATEWAY_SERVER_URL}/source/avatar`, {
-      title,
-      gender,
-      body: convertToBase64(bodyData),
-      face: convertToBase64(faceData),
-    });
-  });
+    await axios
+      .post(`${GATEWAY_SERVER_URL}/sample/avatar`, formData, {
+        headers: formData.getHeaders(),
+      })
+      .then(() => {
+        console.log('success');
+      })
+      .catch((err) => {
+        console.log('error is fired');
+        console.log(err);
+      });
+  }
 }
 
 /**
@@ -32,29 +46,28 @@ async function generateAvatar() {
  */
 async function generateScene() {
   console.log('generate scenes.');
-  SCENE.forEach(async ({ title, type, fileDirectory }) => {
-    const videoData = await loadFile(fileDirectory, 'video.mp4');
+  for (const { title, type, fileDirectory } of SCENE) {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('type', type);
+    formData.append(
+      'video',
+      fs.createReadStream(`${__dirname}/${fileDirectory}/video.mp4`),
+    );
+    formData.append('key', ADMIN_KEY);
 
-    // FIXME: check API endpoint.
-    await axios.post(`${GATEWAY_SERVER_URL}/source/scene`, {
-      title,
-      location: type,
-      video: convertToBase64(videoData),
-    });
-  });
-}
-
-/* -------------------------------------------------------------------------- */
-/*                               BELOW IS UTILS                               */
-/* -------------------------------------------------------------------------- */
-
-async function loadFile(fileDirectory: string, fileName: string) {
-  const filePath = path.join(__dirname, '../assets', fileDirectory, fileName);
-  return await fs.readFile(filePath);
-}
-
-function convertToBase64(data: Buffer) {
-  return data.toString('base64');
+    await axios
+      .post(`${GATEWAY_SERVER_URL}/sample/avatar`, formData, {
+        headers: formData.getHeaders(),
+      })
+      .then(() => {
+        console.log('success');
+      })
+      .catch((err) => {
+        console.log('error is fired');
+        console.log(err.response.data);
+      });
+  }
 }
 
 /* -------------------------------------------------------------------------- */

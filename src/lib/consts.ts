@@ -1,4 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export const GATEWAY_SERVER_URL = process.env.GATEWAY_SERVER_URL as string;
+export const ADMIN_KEY = process.env.ADMIN_KEY as string;
 
 type genderType = 'male' | 'female';
 
@@ -6,22 +10,22 @@ export const AVATAR = [
   {
     title: '서영',
     gender: 'female' as genderType,
-    fileDirectory: '/avatars/seoyoung',
+    fileDirectory: '/assets/avatars/seoyoung',
   },
   {
     title: '서연',
     gender: 'female' as genderType,
-    fileDirectory: '/avatars/seoyeon',
+    fileDirectory: '/assets/avatars/seoyeon',
   },
   {
     title: '진우',
     gender: 'male' as genderType,
-    fileDirectory: '/avatars/jinwoo',
+    fileDirectory: '/assets/avatars/jinwoo',
   },
   {
     title: '귀정',
     gender: 'male' as genderType,
-    fileDirectory: '/avatars/guijung',
+    fileDirectory: '/assets/avatars/guijung',
   },
 ];
 

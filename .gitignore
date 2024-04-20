@@ -6,7 +6,7 @@
 /node_modules
 
 # request images (privacy)
-/assets
+*/assets
 
 # deprecated feature
 /deprecated
